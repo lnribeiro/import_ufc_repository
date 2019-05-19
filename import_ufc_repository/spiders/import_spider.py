@@ -3,36 +3,13 @@ import re
 
 # Inspired by tutorial at https://docs.scrapy.org/en/latest/intro/tutorial.html
 
-
-
 class ImportUfcRepositorySpider(scrapy.Spider):
 	name = 'import_ufc_repository'
 	domain = 'http://www.repositorio.ufc.br'
-	start_urls = ['http://www.repositorio.ufc.br/handle/riufc/2/browse',		# BU
-					'http://www.repositorio.ufc.br/handle/riufc/41/browse',		# CCA
-					'http://www.repositorio.ufc.br/handle/riufc/58/browse',		# CC
-					'http://www.repositorio.ufc.br/handle/riufc/16297/browse',	# Crateus
-					'http://www.repositorio.ufc.br/handle/riufc/232/browse',	# CH
-					'http://www.repositorio.ufc.br/handle/riufc/533/browse',	# Quixada
-					'http://www.repositorio.ufc.br/handle/riufc/13973/browse',	# Russas
-					'http://www.repositorio.ufc.br/handle/riufc/472/browse',	# Sobral
-					'http://www.repositorio.ufc.br/handle/riufc/419/browse',	# CT
-					'http://www.repositorio.ufc.br/handle/riufc/22988/browse',	# EU
-					'http://www.repositorio.ufc.br/handle/riufc/349/browse',	# FACED
-					'http://www.repositorio.ufc.br/handle/riufc/112/browse',	# FADIR
-					'http://www.repositorio.ufc.br/handle/riufc/389/browse',	# FAMED
-					'http://www.repositorio.ufc.br/handle/riufc/137/browse',	# FEAAC
-					'http://www.repositorio.ufc.br/handle/riufc/179/browse',	# FFOE
-					'http://www.repositorio.ufc.br/handle/riufc/622/browse',			# ICA
-					'http://www.repositorio.ufc.br/handle/riufc/10/browse',			# LABOMAR
-					'http://www.repositorio.ufc.br/handle/riufc/23970/browse',			# Memorial UFC
-					'http://www.repositorio.ufc.br/handle/riufc/13179/browse',			# PREX
-					'http://www.repositorio.ufc.br/handle/riufc/962/browse',	# PROGEP
-					'http://www.repositorio.ufc.br/handle/riufc/20641/browse',	# PROGRAD
-					'http://www.repositorio.ufc.br/handle/riufc/923/browse',	# PRPPG
-					'http://www.repositorio.ufc.br/handle/riufc/28762/browse',	# TCC Especializacao
-					'http://www.repositorio.ufc.br/handle/riufc/21982/browse'	# TCC Graduacao
-					]
+
+	def start_requests(self):
+		url = getattr(self, 'url', None)
+		yield scrapy.Request(url = url, callback=self.parse)
 
 	# https://stackoverflow.com/questions/9662346/python-code-to-remove-html-tags-from-a-string
 	def cleanhtml(self, raw_html):
@@ -70,6 +47,11 @@ class ImportUfcRepositorySpider(scrapy.Spider):
 		# get pdf download panel
 		panel_div = response.xpath('//div[@class="panel panel-info"]')
 		href = panel_div.xpath('.//a/@href').extract_first()
-		output['href'] = self.domain + href
+
+		if href is not None:
+			output['href'] = self.domain + href
+		else:
+			output['href'] = ''
+			self.logger.warning('There is no pdf available at {}'.format(response.url))
 
 		yield output
