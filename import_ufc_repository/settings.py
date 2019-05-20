@@ -9,11 +9,14 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
+# Tips on how not to get banned by the websites getting crawled: https://docs.scrapy.org/en/latest/topics/practices.html#avoiding-getting-banned
+
 BOT_NAME = 'import_ufc_repository'
 
 SPIDER_MODULES = ['import_ufc_repository.spiders']
 NEWSPIDER_MODULE = 'import_ufc_repository.spiders'
 
+#LOG_LEVEL = 'DEBUG'
 LOG_LEVEL = 'INFO'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -35,7 +38,7 @@ DOWNLOAD_DELAY = 1
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False

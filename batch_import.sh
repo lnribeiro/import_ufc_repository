@@ -25,3 +25,5 @@ scrapy crawl import_ufc_repository -o 22-PRPPG.json -a url=http://www.repositori
 scrapy crawl import_ufc_repository -o 23-TCCESP.json -a url=http://www.repositorio.ufc.br/handle/riufc/28762/browse			# TCC Especializacao
 scrapy crawl import_ufc_repository -o 24-TCC.json -a url=http://www.repositorio.ufc.br/handle/riufc/21982/browse			# TCC Graduacao
 scrapy crawl import_ufc_repository -o 25-IEFES.json -a url=http://www.repositorio.ufc.br/handle/riufc/40619/browse			# IEFES
+
+cat *.json > ufc_repo.json
