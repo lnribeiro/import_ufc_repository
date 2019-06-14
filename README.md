@@ -2,11 +2,11 @@
 
 This repository provides a Scrapy spider that crawls the [Repositório Institucional da Universidade Federal do Ceará](http://www.repositorio.ufc.br/).
 
-The crawler is fed with a repository link, e.g. "CH - Centro de Humanidades [http://www.repositorio.ufc.br/handle/riufc/232](http://www.repositorio.ufc.br/handle/riufc/232)" and then it scraps every listed document and also follows the pagination links.
+The crawler is fed with a repository community link, e.g., "CH - Centro de Humanidades [http://www.repositorio.ufc.br/handle/riufc/232](http://www.repositorio.ufc.br/handle/riufc/232)" and then it crawls every listed document and also follows the pagination links.
 
 ## Usage
 
-To start scraping a repository:
+To start scraping a repository community:
 
 ```
 scrapy crawl import_ufc_repository -a url=REPOSITORY_URL_HERE
